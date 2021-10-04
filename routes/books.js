@@ -40,12 +40,15 @@ router.post('/', asyncHandler(async(req, res) => {
 }));
 
 //Render Form to Update Book
-router.get('/:id', asyncHandler(async(req, res) => {
+router.get('/:id', asyncHandler(async(req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if(book) {
         res.render('update-book', { book, title: "Update Book" });
     } else {
-        res.sendStatus(404);
+        const err = new Error();
+        err.status = 404;
+        err.message = 'That does not exist.';
+        next(err);
     }
 }));
 

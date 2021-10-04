@@ -31,7 +31,8 @@ app.use((req, res, next) => {
   err.status = 404;
   err.message = 'No page here buddy.';
   console.log(`There has been a ${err.status} error`);
-  res.render('error', { err });
+  //res.render('page-not-found', { err });
+  next(err);
 });
 
 app.use((err, req, res, next) => {
@@ -41,7 +42,7 @@ app.use((err, req, res, next) => {
   } else {
       err.message = err.message || `There has been a server error.`;
       console.log(`There has been a ${err.status} error`)
-      res.status(err.status || 500).render('error', { err });
+      res.status(err.status || 500).render('page-not=found', { err });
   }
 });
 
