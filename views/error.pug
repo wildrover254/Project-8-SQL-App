@@ -1,6 +1,5 @@
-extends layout
-
-block content
-  h1= message
-  h2= err.status
-  pre #{err.stack}
+if(errors)
+  h2.errors One or more required fields must be filled out.
+  ul.errors
+    each error in errors
+      li=error.message

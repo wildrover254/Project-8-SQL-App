@@ -25,8 +25,18 @@ router.get('/new', (req, res) => {
 
 //Post New Book to database
 router.post('/', asyncHandler(async(req, res) => {
-    let book = await Book.create(req.body);
-    res.redirect('/');
+    let book;
+    try {
+        book = await Book.create(req.body);
+        res.redirect('/');
+    } catch (error) {
+        if (error.name === "SequelizeValidationError") {
+            book = await Book.build(req.body);
+            res.render('new-book', { book, errors: error.errors, title: 'New Book' });
+        } else {
+            throw error;
+        }
+    }  
 }));
 
 //Render Form to Update Book
@@ -40,12 +50,23 @@ router.get('/:id', asyncHandler(async(req, res) => {
 }));
 
 router.post('/:id/edit', asyncHandler(async(req,res) => {
-    let book = await Book.findByPk(req.params.id);
-    if(book) {
-        await book.update(req.body);
-        res.redirect('/');
-    } else {
-        res.sendStatus(404);
+    let book;
+    try{
+        book = await Book.findByPk(req.params.id);
+        if(book) {
+            await book.update(req.body);
+            res.redirect('/');
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        if (error.name === "SequelizeValidationError") {
+            book = await Book.build(req.body);
+            book.id = req.params.id;
+            res.render('update-book', { book, errors: error.errors, title: 'Update Book' });
+        } else {
+            throw error;
+        }
     }
 }));
 
