@@ -1,15 +1,15 @@
-div
+p
     label(for='title') Title:
-    input(name='title', type='text', value=book.title)            
-div
+    input#title(name='title', type='text', value=book.title)            
+p
     label(for='author') Author:
-    input(name='author', type='text', value=book.author)            
-div
+    input#author(name='author', type='text', value=book.author)            
+p
     label(for='genre') Genre:
-    input(name='genre', type='text', value=book.genre)            
-div
+    input#genre(name='genre', type='text', value=book.genre)            
+p
     label(for='year') Year:
-    input(name='year', type='text', value=book.year)
+    input#year(name='year', type='text', value=book.year)
 input(type='submit')
-div
+p
     a.button(href='/books') Cancel

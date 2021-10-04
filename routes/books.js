@@ -23,7 +23,7 @@ router.get('/new', (req, res) => {
     res.render('new-book', { book: {}, title: "New Book" });
 });
 
-//Post New Book to database
+//Post New Book to database, show validation errors if any
 router.post('/', asyncHandler(async(req, res) => {
     let book;
     try {
@@ -49,6 +49,7 @@ router.get('/:id', asyncHandler(async(req, res) => {
     }
 }));
 
+//Post an edit to the database, show validation errors if any
 router.post('/:id/edit', asyncHandler(async(req,res) => {
     let book;
     try{
@@ -70,6 +71,7 @@ router.post('/:id/edit', asyncHandler(async(req,res) => {
     }
 }));
 
+//Delete a book from the database
 router.post('/:id/delete', asyncHandler(async(req, res) => {
     let book;
     book = await Book.findByPk(req.params.id);
