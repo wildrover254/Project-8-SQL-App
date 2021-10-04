@@ -5,3 +5,5 @@ block content
 
     form(action="/books/" + book.id + "/edit", method="post")
         include form
+    form(action="/books/" + book.id + "/delete", method="post")
+        input(type="submit", value="Delete Book")
